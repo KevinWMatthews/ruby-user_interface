@@ -2,7 +2,8 @@
 
 require 'highline'
 
-class UserInterface
+
+class HighLineInterface
   attr_reader :stdin, :stdout
   def initialize(stdin: $stdin, stdout: $stdout)
     @stdin = stdin

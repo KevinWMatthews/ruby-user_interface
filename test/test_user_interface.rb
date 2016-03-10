@@ -3,10 +3,10 @@
 require 'minitest/autorun'
 require_relative '../src/user_interface.rb'
 
-describe UserInterface, "Test User Interface" do
+describe HighLineInterface, "Test HighLine Interface" do
   let (:stdin) { StringIO.new }
   let (:stdout) { StringIO.new }
-  let (:user_interface) { UserInterface.new(stdin: stdin, stdout: stdout) }
+  let (:user_interface) { HighLineInterface.new(stdin: stdin, stdout: stdout) }
   let (:user_input) { "" }
   let (:user_output) { nil }
 
@@ -23,7 +23,7 @@ describe UserInterface, "Test User Interface" do
   end
 
   it "can be initialized" do
-    UserInterface.new
+    HighLineInterface.new
   end
 
   describe "when prompting user for a line of input" do
