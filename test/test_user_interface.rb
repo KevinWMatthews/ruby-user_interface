@@ -52,4 +52,17 @@ class UserInterfaceTest < MiniTest::Test
     assert_equal(user_input, ui_result)
     assert (output.include?(prompt))
   end
+
+  def test_vary_message
+    user_input = "test"
+    prompt = "Different Message"
+    add_items_to_input_stream([user_input])
+
+    ui_result = user_interface.entry(prompt)
+
+    output = read_output_stream
+
+    assert_equal(user_input, ui_result)
+    assert (output.include?(prompt))
+  end
 end
