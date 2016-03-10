@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 
 class UserInterface
-  def initialize(stdin: $stdin, stdout: $stdout)
+  attr_reader :stdin
+  def initialize(stdin: $stdin)
+    @stdin = stdin
   end
 
   def entry(message)
-    "test"
+    stdin.gets.chomp
   end
 end
