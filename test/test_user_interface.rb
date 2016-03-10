@@ -1,16 +1,14 @@
 #!/usr/bin/env ruby
 
-require'minitest'
 require 'minitest/autorun'
 require_relative '../src/user_interface.rb'
 
-class UserInterfaceTest < MiniTest::Test
-  attr_reader :user_interface, :stdin, :stdout
-  def setup
-    @stdin = StringIO.new
-    @stdout = StringIO.new
-    @user_interface = UserInterface.new(stdin: stdin, stdout: stdout)
-  end
+describe UserInterface, "Test User Interface" do
+  let (:stdin) { StringIO.new }
+  let (:stdout) { StringIO.new }
+  let (:user_interface) { UserInterface.new(stdin: stdin, stdout: stdout) }
+  let (:user_input) { "" }
+  let (:user_output) { nil }
 
   def add_items_to_input_stream(item_list)
     item_list.each do |item|
@@ -24,45 +22,47 @@ class UserInterfaceTest < MiniTest::Test
     stdout.read
   end
 
-  def test_initialize
+  it "can be initialized" do
     UserInterface.new
   end
 
-  def test_entry
-    user_input = "test"
-    prompt = "Message"
-    add_items_to_input_stream([user_input])
+  describe "when prompting user for a line of input" do
+    it "prints message and returns input" do
+      user_input = "test"
+      prompt = "Message"
+      add_items_to_input_stream([user_input])
 
-    ui_result = user_interface.entry(prompt)
+      ui_result = user_interface.entry(prompt)
 
-    output = read_output_stream
+      output = read_output_stream
 
-    assert_equal(user_input, ui_result)
-    assert output.include?(prompt), "Unexpected output: #{output}"
-  end
+      assert_equal(user_input, ui_result)
+      assert output.include?(prompt), "Unexpected output: #{output}"
+    end
 
-  def test_vary_entry
-    user_input = "not test"
-    prompt = "Message"
-    add_items_to_input_stream([user_input])
+    it "can accept varying user input" do
+      user_input = "not test"
+      prompt = "Message"
+      add_items_to_input_stream([user_input])
 
-    ui_result = user_interface.entry(prompt)
+      ui_result = user_interface.entry(prompt)
 
-    output = read_output_stream
-    assert_equal(user_input, ui_result)
-    assert output.include?(prompt), "Unexpected output: #{output}"
-  end
+      output = read_output_stream
+      assert_equal(user_input, ui_result)
+      assert output.include?(prompt), "Unexpected output: #{output}"
+    end
 
-  def test_vary_message
-    user_input = "test"
-    prompt = "Different Message"
-    add_items_to_input_stream([user_input])
+    it "can display varying messages" do
+      user_input = "test"
+      prompt = "Different Message"
+      add_items_to_input_stream([user_input])
 
-    ui_result = user_interface.entry(prompt)
+      ui_result = user_interface.entry(prompt)
 
-    output = read_output_stream
+      output = read_output_stream
 
-    assert_equal(user_input, ui_result)
-    assert output.include?(prompt), "Unexpected output: #{output}"
+      assert_equal(user_input, ui_result)
+      assert output.include?(prompt), "Unexpected output: #{output}"
+    end
   end
 end
