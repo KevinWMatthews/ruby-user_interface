@@ -3,6 +3,21 @@
 require 'minitest/autorun'
 require_relative '../src/user_interface.rb'
 
+describe UserInterface, "Test User Interace Parent Class" do
+  it "can be initialized with default arguments" do
+    UserInterface.new
+  end
+
+  it "can be initialized with custom IO streams" do
+    UserInterface.new(stdin: StringIO.new, stdout: StringIO.new)
+  end
+
+  it "#entry" do
+    user_interface = UserInterface.new
+    user_interface.entry("message")
+  end
+end
+
 describe HighLineInterface, "Test HighLine Interface" do
   let (:stdin) { StringIO.new }
   let (:stdout) { StringIO.new }
