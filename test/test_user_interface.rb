@@ -38,7 +38,7 @@ class UserInterfaceTest < MiniTest::Test
     output = read_output_stream
 
     assert_equal(user_input, ui_result)
-    assert (output.include?(prompt))
+    assert output.include?(prompt), "Unexpected output: #{output}"
   end
 
   def test_vary_entry
@@ -50,7 +50,7 @@ class UserInterfaceTest < MiniTest::Test
 
     output = read_output_stream
     assert_equal(user_input, ui_result)
-    assert (output.include?(prompt))
+    assert output.include?(prompt), "Unexpected output: #{output}"
   end
 
   def test_vary_message
@@ -63,6 +63,6 @@ class UserInterfaceTest < MiniTest::Test
     output = read_output_stream
 
     assert_equal(user_input, ui_result)
-    assert (output.include?(prompt))
+    assert output.include?(prompt), "Unexpected output: #{output}"
   end
 end

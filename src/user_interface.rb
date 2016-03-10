@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'highline'
+
 class UserInterface
   attr_reader :stdin, :stdout
   def initialize(stdin: $stdin, stdout: $stdout)
@@ -8,7 +10,7 @@ class UserInterface
   end
 
   def entry(message)
-    stdout.puts message
-    stdin.gets.chomp
+    ui_system = HighLine.new(stdin, stdout)
+    ui_system.ask(message)
   end
 end
