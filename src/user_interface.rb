@@ -24,6 +24,15 @@ module InterfaceFactory
       ui_system = HighLine.new(stdin, stdout)
       ui_system.ask(message)
     end
+
+    def select_from_list(message, list)
+      ui_system = HighLine.new(stdin, stdout)
+      ui_system.choose do |menu|
+        menu.prompt = message
+        # HOLY SWEET MERCIFUL CRAP the '*' turns the array into an argument list!
+        menu.choices(*list)
+      end
+    end
   end
 
   class TerminalInterface < UserInterface

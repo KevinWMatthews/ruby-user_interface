@@ -94,6 +94,31 @@ describe HighLineInterface, "Test HighLine Interface" do
       assert output.include?(prompt), "Unexpected output: #{output}"
     end
   end
+
+  describe "when prompting user to select an item from a list" do
+    it "prints all items and returns the user's selection" do
+      user_input = 1
+      prompt = "Select an item from the list"
+      add_items_to_input_stream([user_input])
+
+      list = [:item1, :item2, :item3]
+
+      ui_result = user_interface.select_from_list(prompt, list)
+
+      expected = list[user_input-1]   # HighLine user entries are indexed from 1
+
+      # Verify input
+      assert_equal(expected, ui_result)
+
+      # Verify output
+      output = read_output_stream
+
+      assert output.include?(prompt), "Unexpected output: #{output}"
+      list.each do |item|
+        assert output.include?(item.to_s)
+      end
+    end
+  end
 end
 
 describe TerminalInterface, "Test basic terminal user interface" do
