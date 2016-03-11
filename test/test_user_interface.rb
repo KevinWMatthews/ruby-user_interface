@@ -118,7 +118,7 @@ describe HighLineInterface, "Test HighLine Interface" do
       list = [:item1, :item2, :item3]
       expected = list[user_selection-1]   # HighLine user entries are indexed from 1
 
-      ui_return = user_interface.select_from_list(prompt, list)
+      ui_return = user_interface.select_from_list(prompt, *list)
 
       assert_equal(expected, ui_return)
       verify_output(prompt, *list)
@@ -132,7 +132,7 @@ describe HighLineInterface, "Test HighLine Interface" do
       list = [:item1, :item2, :item3]
       expected = list[user_selection-1]   # HighLine user entries are indexed from 1
 
-      ui_return = user_interface.select_from_list(prompt, list)
+      ui_return = user_interface.select_from_list(prompt, *list)
 
       assert_equal(expected, ui_return)
       verify_output(prompt, *list)
