@@ -12,9 +12,10 @@ describe InterfaceFactory, "Sanity checks for factory" do
   end
 end
 
-describe UserInterface, "Test User Interace Parent Class" do
+describe UserInterface, "Test User Interace parent class" do
+  let (:user_interface) { UserInterface.new }
+
   it "can be initialized with default arguments" do
-    UserInterface.new
   end
 
   it "can be initialized with custom IO streams" do
@@ -22,8 +23,7 @@ describe UserInterface, "Test User Interace Parent Class" do
   end
 
   it "#entry" do
-    user_interface = UserInterface.new
-    user_interface.entry("message")
+    assert_raises(RuntimeError) { user_interface.entry("message") }
   end
 end
 

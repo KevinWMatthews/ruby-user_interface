@@ -11,6 +11,7 @@ module InterfaceFactory
     end
 
     def entry(message)
+      raise "#{self.class} subclasses must implement: #{__method__}"
     end
   end
 
