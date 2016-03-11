@@ -51,6 +51,16 @@ describe HighLineInterface, "Test HighLine Interface" do
     stdout.read
   end
 
+  # Expected output should be passed as individual arguments.
+  # Pass arrays using the splat ('*') operator.
+  def verify_output(*expected_output)
+    actual_output = read_output_stream
+    expected_output.each do |expected|
+      puts expected
+      assert actual_output.include?(expected.to_s), "Expected output not found: #{expected}"
+    end
+  end
+
   it "can be initialized" do
     InterfaceFactory.factory(:highline)
   end
@@ -110,12 +120,7 @@ describe HighLineInterface, "Test HighLine Interface" do
       assert_equal(expected, ui_result)
 
       # Verify output
-      output = read_output_stream
-
-      assert output.include?(prompt), "Unexpected output: #{output}"
-      list.each do |item|
-        assert output.include?(item.to_s)
-      end
+      verify_output(*list)
     end
 
     it "sends an error message if the user selects invalid input" do
