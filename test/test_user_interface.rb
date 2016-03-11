@@ -102,17 +102,39 @@ describe HighLineInterface, "Test HighLine Interface" do
       add_items_to_input_stream([user_input])
 
       list = [:item1, :item2, :item3]
+      expected = list[user_input-1]   # HighLine user entries are indexed from 1
 
       ui_result = user_interface.select_from_list(prompt, list)
 
-      expected = list[user_input-1]   # HighLine user entries are indexed from 1
-
-      # Verify input
+      # Verify method return value
       assert_equal(expected, ui_result)
 
       # Verify output
       output = read_output_stream
 
+      assert output.include?(prompt), "Unexpected output: #{output}"
+      list.each do |item|
+        assert output.include?(item.to_s)
+      end
+    end
+
+    it "sends an error message if the user selects invalid input" do
+      user_input = ["invalid", 1]
+      prompt = "Select an item from the list"
+      add_items_to_input_stream([user_input])
+
+      list = [:item1, :item2, :item3]
+      expected = list[1-1]   # HighLine user entries are indexed from 1
+
+      ui_result = user_interface.select_from_list(prompt, list)
+
+      # Verify method return value
+      assert_equal(expected, ui_result)
+
+      # Verify output
+      output = read_output_stream
+
+      assert output.include?("You must choose one of"), "Unexpected output: #{output}"
       assert output.include?(prompt), "Unexpected output: #{output}"
       list.each do |item|
         assert output.include?(item.to_s)
