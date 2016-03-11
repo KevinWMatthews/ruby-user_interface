@@ -13,6 +13,10 @@ module InterfaceFactory
     def entry(message)
       raise "#{self.class} subclasses must implement: #{__method__}"
     end
+
+    def select_from_list(prompt, list)
+      raise "#{self.class} subclasses must implement: #{__method__}"
+    end
   end
 
   class HighLineInterface < UserInterface

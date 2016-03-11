@@ -25,6 +25,11 @@ describe UserInterface, "Test User Interace parent class" do
   it "#entry" do
     assert_raises(RuntimeError) { user_interface.entry("message") }
   end
+
+  it "#select_from_list" do
+    list = [:item1, :item2, :item3]
+    assert_raises(RuntimeError) { user_interface.select_from_list("prompt", list) }
+  end
 end
 
 describe HighLineInterface, "Test HighLine Interface" do
