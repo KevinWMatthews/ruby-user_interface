@@ -4,6 +4,7 @@ require 'minitest/autorun'
 require_relative '../src/user_interface.rb'
 include InterfaceFactory
 
+# This should only be executed once per test because it rewinds the stream.
 # Expected output should be passed as individual arguments.
 # Pass arrays using the splat ('*') operator.
 def add_items_to_input_stream(*items)
@@ -75,65 +76,65 @@ describe HighLineInterface, "Test HighLine Interface" do
 
   describe "when prompting user for a line of input" do
     it "prints message and returns input" do
-      user_input = "test"
       prompt = "Message"
+      user_input = "test"
       add_items_to_input_stream(user_input)
 
-      ui_result = user_interface.entry(prompt)
+      ui_return = user_interface.entry(prompt)
 
-      assert_equal(user_input, ui_result)
+      assert_equal(user_input, ui_return)
       verify_output(prompt)
     end
 
     it "can accept varying user input" do
-      user_input = "not test"
       prompt = "Message"
+      user_input = "not test"
       add_items_to_input_stream(user_input)
 
-      ui_result = user_interface.entry(prompt)
+      ui_return = user_interface.entry(prompt)
 
-      assert_equal(user_input, ui_result)
+      assert_equal(user_input, ui_return)
       verify_output(prompt)
     end
 
     it "can display varying messages" do
-      user_input = "test"
       prompt = "Different Message"
+      user_input = "test"
       add_items_to_input_stream(user_input)
 
-      ui_result = user_interface.entry(prompt)
+      ui_return = user_interface.entry(prompt)
 
-      assert_equal(user_input, ui_result)
+      assert_equal(user_input, ui_return)
       verify_output(prompt)
     end
   end
 
   describe "when prompting user to select an item from a list" do
     it "prints all items and returns the user's selection" do
-      user_input = 1
       prompt = "Select an item from the list"
-      add_items_to_input_stream(user_input)
+      user_selection = 1
+      add_items_to_input_stream(user_selection)
 
       list = [:item1, :item2, :item3]
-      expected = list[user_input-1]   # HighLine user entries are indexed from 1
+      expected = list[user_selection-1]   # HighLine user entries are indexed from 1
 
-      ui_result = user_interface.select_from_list(prompt, list)
+      ui_return = user_interface.select_from_list(prompt, list)
 
-      assert_equal(expected, ui_result)
+      assert_equal(expected, ui_return)
       verify_output(prompt, *list)
     end
 
     it "sends an error message if the user selects invalid input" do
-      user_input = ["invalid", 1]
+      user_selection = 2
       prompt = "Select an item from the list"
-      add_items_to_input_stream(user_input)
+      add_items_to_input_stream("invalid", user_selection)
 
       list = [:item1, :item2, :item3]
-      expected = list[1-1]   # HighLine user entries are indexed from 1
+      expected = list[user_selection-1]   # HighLine user entries are indexed from 1
 
-      ui_result = user_interface.select_from_list(prompt, list)
+      ui_return = user_interface.select_from_list(prompt, list)
 
-      assert_equal(expected, ui_result)
+      assert_equal(expected, ui_return)
       verify_output(prompt, *list)
     end
   end
@@ -152,35 +153,35 @@ describe TerminalInterface, "Test basic terminal user interface" do
 
   describe "when prompting user for a line of input" do
     it "prints message and returns input" do
-      user_input = "test"
       prompt = "Message"
+      user_input = "test"
       add_items_to_input_stream(user_input)
 
-      ui_result = user_interface.entry(prompt)
+      ui_return = user_interface.entry(prompt)
 
-      assert_equal(user_input, ui_result)
+      assert_equal(user_input, ui_return)
       verify_output(prompt)
     end
 
     it "can accept varying user input" do
-      user_input = "not test"
       prompt = "Message"
+      user_input = "not test"
       add_items_to_input_stream(user_input)
 
-      ui_result = user_interface.entry(prompt)
+      ui_return = user_interface.entry(prompt)
 
-      assert_equal(user_input, ui_result)
+      assert_equal(user_input, ui_return)
       verify_output(prompt)
     end
 
     it "can display varying messages" do
-      user_input = "test"
       prompt = "Different Message"
+      user_input = "test"
       add_items_to_input_stream(user_input)
 
-      ui_result = user_interface.entry(prompt)
+      ui_return = user_interface.entry(prompt)
 
-      assert_equal(user_input, ui_result)
+      assert_equal(user_input, ui_return)
       verify_output(prompt)
     end
   end
