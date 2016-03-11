@@ -2,6 +2,15 @@
 
 require 'minitest/autorun'
 require_relative '../src/user_interface.rb'
+include InterfaceFactory
+
+describe InterfaceFactory, "Sanity checks for factory" do
+  describe "when passed an invalid interface" do
+    it "raises an error" do
+      assert_raises(RuntimeError) { InterfaceFactory.factory(:not_an_interface) }
+    end
+  end
+end
 
 describe UserInterface, "Test User Interace Parent Class" do
   it "can be initialized with default arguments" do
@@ -21,7 +30,7 @@ end
 describe HighLineInterface, "Test HighLine Interface" do
   let (:stdin) { StringIO.new }
   let (:stdout) { StringIO.new }
-  let (:user_interface) { HighLineInterface.new(stdin: stdin, stdout: stdout) }
+  let (:user_interface) { InterfaceFactory.factory(:highline, stdin: stdin, stdout: stdout) }
   let (:user_input) { "" }
   let (:user_output) { nil }
 
@@ -38,7 +47,7 @@ describe HighLineInterface, "Test HighLine Interface" do
   end
 
   it "can be initialized" do
-    HighLineInterface.new
+    InterfaceFactory.factory(:highline)
   end
 
   describe "when prompting user for a line of input" do
@@ -85,7 +94,7 @@ end
 describe TerminalInterface, "Test basic terminal user interface" do
   let (:stdin) { StringIO.new }
   let (:stdout) { StringIO.new }
-  let (:user_interface) { TerminalInterface.new(stdin: stdin, stdout: stdout) }
+  let (:user_interface) { InterfaceFactory.factory(:terminal, stdin: stdin, stdout: stdout) }
   let (:user_input) { "" }
   let (:user_output) { nil }
 
@@ -102,7 +111,7 @@ describe TerminalInterface, "Test basic terminal user interface" do
   end
 
   it "can be initialized" do
-    TerminalInterface.new
+    InterfaceFactory.factory(:terminal)
   end
 
   describe "when prompting user for a line of input" do
