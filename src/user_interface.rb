@@ -2,7 +2,7 @@
 
 require 'highline'
 
-module InterfaceFactory
+module UserInterfaceFactory
   class UserInterface
     attr_reader :stdin, :stdout
     def initialize(stdin: $stdin, stdout: $stdout)

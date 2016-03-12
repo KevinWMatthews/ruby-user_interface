@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 require_relative '../src/user_interface.rb'
-include InterfaceFactory
+include UserInterfaceFactory
 
 # This should only be executed once per test because it rewinds the stream.
 # Expected output should be passed as individual arguments.
@@ -35,10 +35,10 @@ def show_missing_output(expected, actual)
   "#{actual}\n"
 end
 
-describe InterfaceFactory, "Sanity checks for factory" do
+describe UserInterfaceFactory, "Sanity checks for factory" do
   describe "when passed an invalid interface" do
     it "raises an error" do
-      assert_raises(RuntimeError) { InterfaceFactory.factory(:not_an_interface) }
+      assert_raises(RuntimeError) { UserInterfaceFactory.factory(:not_an_interface) }
     end
   end
 end
@@ -66,12 +66,12 @@ end
 describe HighLineInterface, "Test HighLine Interface" do
   let (:stdin) { StringIO.new }
   let (:stdout) { StringIO.new }
-  let (:user_interface) { InterfaceFactory.factory(:highline, stdin: stdin, stdout: stdout) }
+  let (:user_interface) { UserInterfaceFactory.factory(:highline, stdin: stdin, stdout: stdout) }
   let (:user_input) { "" }
   let (:user_output) { nil }
 
   it "can be initialized" do
-    InterfaceFactory.factory(:highline)
+    UserInterfaceFactory.factory(:highline)
   end
 
   describe "when prompting user for a line of input" do
@@ -159,12 +159,12 @@ end
 describe TerminalInterface, "Test basic terminal user interface" do
   let (:stdin) { StringIO.new }
   let (:stdout) { StringIO.new }
-  let (:user_interface) { InterfaceFactory.factory(:terminal, stdin: stdin, stdout: stdout) }
+  let (:user_interface) { UserInterfaceFactory.factory(:terminal, stdin: stdin, stdout: stdout) }
   let (:user_input) { "" }
   let (:user_output) { nil }
 
   it "can be initialized" do
-    InterfaceFactory.factory(:terminal)
+    UserInterfaceFactory.factory(:terminal)
   end
 
   describe "when prompting user for a line of input" do
