@@ -125,8 +125,8 @@ describe HighLineInterface, "Test HighLine Interface" do
     end
 
     it "sends an error message if the user selects invalid input" do
-      user_selection = 2
       prompt = "Select an item from the list"
+      user_selection = 2
       add_items_to_input_stream("invalid", user_selection)
 
       list = [:item1, :item2, :item3]
@@ -136,6 +136,22 @@ describe HighLineInterface, "Test HighLine Interface" do
 
       assert_equal(expected, ui_return)
       verify_output(prompt, *list)
+      verify_output("You must choose one of")
+    end
+
+    it "sends an error message if the user does not select input" do
+      user_selection = 3
+      prompt = "Select an item from the list"
+      add_items_to_input_stream("", user_selection)
+
+      list = [:item1, :item2, :item3]
+      expected = list[user_selection-1]   # HighLine user entries are indexed from 1
+
+      ui_return = user_interface.select_from_list(prompt, *list)
+
+      assert_equal(expected, ui_return)
+      verify_output(prompt, *list)
+      verify_output("Ambiguous choice.")
     end
   end
 end
