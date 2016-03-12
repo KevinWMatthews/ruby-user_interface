@@ -42,7 +42,7 @@ module InterfaceFactory
     end
   end
 
-  def self.factory(interface, stdin: nil, stdout: nil)
+  def self.factory(interface, stdin: $stdin, stdout: $stdout)
     klass_for(interface).new(stdin: stdin, stdout: stdout)
   end
 
